@@ -178,6 +178,7 @@ def gen_stmt_list(source_code, is_module=True, is_function=False):
             #                            )))
             # else:
             #     raise TypeError("Doesn't support as statement")
+            pass
         else:
             raise TypeError(f"Doesn't support node {node.__name__}")
     
