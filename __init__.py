@@ -1,3 +1,10 @@
+#! python3
+# -*- coding: utf-8 -*-
+
+
+__url__ = "https://github.com/AtengChen/pypack"
+
+
 import sys
 
 sys.setrecursionlimit(20000)
@@ -5,11 +12,19 @@ sys.setrecursionlimit(20000)
 
 import ast
 
+
 from encrypt import encrypt
 from code2oneline import generate_oneliner_module_api
 from encode_version import get_determine_version
 
 from encode_consts import convert_node as ob_const
+
+from black import format_str as _format_code, FileMode
+
+
+def format_code(source):
+    return _format_code(source, mode=FileMode())
+
 
 def pack_source(source, **config):
     """
@@ -46,8 +61,6 @@ def pack_source(source, **config):
         tree = encrypt(tree, complexity=config["encode_varnames"], verbose=config["verbose"])
     
     # print(ast.dump(tree, indent=4))
-    print("\n\n\n")
-    print(ast.unparse(tree))
     
     if config["oneline"]:
         if config["verbose"]:
@@ -64,6 +77,9 @@ def pack_source(source, **config):
     
     if config["verbose"]:
         print("\nDONE!\n\n")
+    
+    
+    source = f"# Packed by {__url__}, a tool written by Aten Chen\n\n\n{format_code(source)}"
     
     return source
 
