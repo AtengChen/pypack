@@ -23,3 +23,21 @@ options:
   -fe FILE_ENCODING, --file-encoding FILE_ENCODING
                         Input and output file encoding
 ```
+
+### Known Limitations:
+ - Only supports "for", "def", "assign", "if-elif-else" statements
+ - Assignment only supports normal assign (like `a = 1`), attribute assign (like `a.b = 1`) and single slice assign (like `a[b] = 2`, but not `a[b][c] = 3`).
+ - "return" can be only used in function level, for example, the following can be packed:
+   
+   ```
+   def a():
+     b = 2
+     return b
+   ```
+   but this can't:
+   ```
+   def a():
+     b = 2
+     if b < 1:
+       return b
+   ```
